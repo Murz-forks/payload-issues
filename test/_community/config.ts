@@ -1,3 +1,4 @@
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { fileURLToPath } from 'node:url'
 import path from 'path'
@@ -13,6 +14,11 @@ const dirname = path.dirname(filename)
 
 export default buildConfigWithDefaults({
   // ...extend config here
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URL || 'file:./db.sqlite',
+    },
+  }),
   collections: [PostsCollection, MediaCollection],
   admin: {
     importMap: {
